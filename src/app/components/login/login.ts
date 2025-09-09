@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router'; // Importe RouterLink
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  templateUrl: './login.html', // Asumiendo que tu HTML se llama login.html
-  styleUrls: [] // Puedes añadir aquí tu archivo de CSS si lo tienes
+  imports: [RouterLink], // Agregue RouterLink a los imports
+  templateUrl: './login.html',
+  styleUrls: []
 })
 export class Login {
 

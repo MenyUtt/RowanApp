@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edificios - Rowan Networks</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .screen-container { width: 100%; max-width: 450px; background-color: #ffffff; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; padding: 20px; }
+        .header-logo-container { margin-bottom: 20px; text-align: center; }
+        .header-logo-container img { width: 80px; height: auto; }
+        .header-title { font-size: 2.5em; color: #d9232d; font-weight: 700; margin-top: 0; margin-bottom: 20px; }
+        .buttons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 400px; }
+        .grid-button { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background-color: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 10px; text-decoration: none; color: #333; font-weight: 600; transition: all 0.3s ease; box-sizing: border-box; }
+        .grid-button:hover { background-color: #e6e6e6; border-color: #d9232d; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .button-icon img { width: 60px; height: auto; margin-bottom: 10px; }
+        .button-text { font-size: 1.1em; color: #d9232d; }
+        .footer-logo { margin-top: 20px; width: 100%; text-align: center; }
+        .footer-logo img { max-width: 200px; }
+
+        @media (max-width: 767px) {
+            body { padding: 0; }
+            .screen-container { min-height: 100vh; max-width: none; border-radius: 0; box-shadow: none; padding: 20px; }
+            .buttons-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="screen-container">
+        
+        <div class="header-logo-container">
+             <img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan">
+        </div>
+
+        <h1 class="header-title">EDIFICIOS</h1>
+
+        <div class="buttons-grid">
+            
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                    <img src="RowanIcon/Edificio.png" alt="Sede Icono">
+                </div>
+                <div class="button-text">SEDE</div>
+            </a>
+            
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                     <img src="RowanIcon/Edificio.png" alt="CJPF Icono">
+                </div>
+                <div class="button-text">CJPF</div>
+            </a>
+
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                     <img src="RowanIcon/Edificio.png" alt="Palacio Icono">
+                </div>
+                <div class="button-text">PALACIO</div>
+            </a>
+
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                     <img src="RowanIcon/Edificio.png" alt="Senda Icono">
+                </div>
+                <div class="button-text">SENDA</div>
+            </a>
+
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                     <img src="RowanIcon/Edificio.png" alt="España Icono">
+                </div>
+                <div class="button-text">ESPAÑA</div>
+            </a>
+
+            <a href="#" class="grid-button">
+                <div class="button-icon">
+                     <img src="RowanIcon/Info.png" alt="Información Icono">
+                </div>
+                <div class="button-text">INFO</div>
+            </a>
+
+        </div>
+
+        <div class="footer-logo">
+             <img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks">
+        </div>
+
+    </div>
+
+</body>
+</html>
