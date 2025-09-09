@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Rowan Networks</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        /* --- Estilos Generales --- */
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .screen-container { width: 100%; max-width: 450px; background-color: #ffffff; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
+        .form-wrapper { position: relative; background-color: #ffffff; width: 100%; max-width: 380px; padding: 80px 40px 40px 40px; margin: 20px; border: 4px solid #d9232d; border-radius: 40px; box-sizing: border-box; text-align: center; }
+        .logo-container { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 120px; height: 120px; background-color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; padding: 5px; }
+        .logo-container img { width: 100%; height: auto; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; font-size: 16px; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #000000; border-radius: 12px; font-size: 16px; box-sizing: border-box; font-family: 'Poppins', sans-serif; transition: border-color 0.3s; }
+        .form-group input:focus { outline: none; border-color: #d9232d; }
+        .btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 50px; font-size: 18px; font-weight: 600; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; margin-bottom: 15px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
+        .btn-login { background-color: #34c759; color: white; }
+        .btn-forgot { background-color: #d9232d; color: white; }
+        .register-link { margin-top: 25px; margin-bottom: 35px; font-size: 15px; color: #555; }
+        .register-link a { color: #d9232d; font-weight: 600; text-decoration: underline; }
+        .footer-logo { border-top: 2px solid #f0f0f0; padding-top: 25px; }
+        .footer-logo img { max-width: 200px; }
+
+        /* --- Estilos para Móviles (Aspecto 16:9 Vertical) --- */
+        @media (max-width: 767px) {
+            body {
+                padding: 0; /* Eliminar padding para que el contenedor ocupe todo */
+            }
+
+            .screen-container {
+                height: 100vh; /* Ocupar toda la altura de la pantalla */
+                max-width: none; /* Quitar el límite de ancho */
+                border-radius: 0; /* Quitar bordes redondeados para un look de pantalla completa */
+                box-shadow: none; /* Quitar sombra en móviles */
+                padding: 0;
+            }
+
+            .form-wrapper {
+                margin: 0; /* Eliminar margen exterior */
+                border-radius: 0;
+                border: 4px solid #d9232d; /* Mantenemos el borde rojo */
+                padding: 80px 30px 30px 30px; /* Ajustar padding para pantallas más pequeñas */
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly; /* CAMBIO: Distribuye el espacio para mejor balance vertical */
+            }
+            
+            .footer-logo {
+                /* No se necesita el margen automático con la nueva distribución */
+                padding-bottom: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="screen-container">
+        <div class="form-wrapper">
+
+            <!-- Logo superior con la ruta corregida para la carpeta 'public' -->
+            <div class="logo-container">
+                <img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan">
+            </div>
+            
+            <!-- Contenido principal del formulario -->
+            <div id="main-form-content">
+                <form>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+                    <button type="button" class="btn btn-forgot">¿Olvidaste tu contraseña?</button>
+                </form>
+
+                <div class="register-link">
+                    <span>¿Aún no tienes cuenta?</span>
+                    <a href="/src/app/components/register/register.html">Regístrate</a>
+                </div>
+            </div>
+
+            <!-- Logo inferior (asume que también está en una subcarpeta dentro de public) -->
+            <div class="footer-logo">
+                 <img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
