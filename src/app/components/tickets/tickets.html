@@ -1,0 +1,238 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" class="back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="header-title">{{ Tickets.Edificio }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding tickets-page">
+  <div class="search-filter-container">
+    <ion-searchbar class="ticket-searchbar" placeholder="ID"></ion-searchbar>
+    <div class="filter-sort-group">
+      <ion-select placeholder="SISTEMA" class="system-select"></ion-select>
+      <ion-button class="filter-button">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="tickets-list">
+    <ion-card class="ticket-card">
+      <ion-card-content class="ticket-card-content">
+        <div class="ticket-header">
+          <p class="ticket-description-title">ID:</p>
+          <p class="ticket-description">{{ Tickets.ID }}</p>
+          <p class="ticket-description-title">Fecha:</p>
+          <p class="ticket-description">{{ Tickets.Fecha }}</p>
+        </div>
+        <div class="ticket-info">
+          <p class="ticket-description-title">Sistema:</p>
+          <p class="ticket-description">{{ Tickets.Sistema }}</p>
+          <p class="ticket-description-title">Descripción:</p>
+          <p class="ticket-description">{{ Tickets.Descripcion }}</p>
+          <p class="ticket-description-title">Asignado a:<br></p>
+          <p class="ticket-description">{{ Tickets.Asignado }}</p>
+        </div>
+        <div class="ticket-actions">
+          <ion-button class="status-button pending-status">{{ Tickets.Status }}</ion-button>
+          <div class="icon-group">
+            <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
+            <ion-img src="RowanIcon/PDF.png" alt="PDF"></ion-img>
+            <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
+            <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="add-ticket-button">
+      <ion-icon src="RowanIcon/Agregar.png"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<style>
+  /* === Estilos generales === */
+
+  .tickets-page {
+    --background: #f4f4f4; /* Fondo gris claro */
+  }
+
+  .header-toolbar {
+    --background: #e70043;
+    color: white;
+  }
+
+  .header-title {
+    color: white;
+    text-align: center;
+  }
+
+  .back-button {
+    --color: white;
+  }
+
+  /* Contenedor principal para centrar el contenido */
+  .ion-padding {
+    max-width: 440px; /* Ancho del iPhone 16 Pro Max */
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* === Search & Filter === */
+  .search-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .ticket-searchbar {
+    --background: #ffffff;
+    --border-radius: 20px;
+    --placeholder-color: #999;
+    --color: #333;
+    height: 40px;
+    flex: 1;
+  }
+  
+  .filter-sort-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .system-select {
+    --placeholder-color: #333;
+    --background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding-left: 10px;
+    max-width: 150px;
+  }
+  
+  .filter-button {
+    --background: #e70043;
+    --border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+  }
+  
+  .filter-button ion-icon {
+    font-size: 1.2em;
+    color: #ffffff;
+  }
+
+  /* === Cards de Tickets === */
+  .tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ticket-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+  }
+
+  .ticket-card-content {
+    padding: 15px;
+  }
+  
+  .ticket-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .ticket-id, .ticket-date {
+    font-weight: bold;
+    color: #e70043;
+    font-size: 0.9em;
+  }
+  
+  .ticket-info {
+    margin-bottom: 10px;
+  }
+
+  .ticket-system {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e70043;
+    margin: 0;
+  }
+  
+  .ticket-description-title {
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+    margin-bottom: 2px;
+  }
+
+  .ticket-description, .ticket-assigned {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+  }
+
+  /* === Acciones de la tarjeta === */
+  .ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .status-button {
+    --border-radius: 20px;
+    font-size: 0.8em;
+    text-transform: none;
+    height: 30px;
+  }
+
+  .pending-status {
+    --background: #e70043; /* Color rojo para "Pendiente" */
+  }
+
+  .completed-status {
+    --background: #6fbb3d; /* Color verde para "Resuelto" */
+  }
+
+  .icon-group {
+    display: flex;
+    gap: 5px;
+  }
+
+  .icon-group ion-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ion-img-pdf {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* === Botón FAB para agregar === */
+  .add-ticket-button {
+    --background: #6fbb3d;
+    --border-radius: 50%;
+    width: 56px;
+    height: 56px;
+  }
+  
+  /* Media query para iPhone 16 Pro Max para centrar el contenido */
+  @media only screen and (min-width: 440px) {
+    .tickets-page {
+      max-width: 440px;
+      margin: 0 auto;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/menu"></ion-back-button>
+      <ion-back-button defaultHref="/menu" class="back-button"></ion-back-button>
     </ion-buttons>
     <ion-title class="header-title">PERFIL</ion-title>
   </ion-toolbar>
@@ -50,6 +50,9 @@
   ion-toolbar {
     --background: #e70043; /* Cambiado a color rojo */
     color: white;
+  }
+  .back-button {
+    --color: white;
   }
 
   .header-title {
