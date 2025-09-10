@@ -12,7 +12,7 @@ import {
   IonImg, 
   IonLabel, 
   IonButton,
-  IonItem // Add this import
+  IonItem
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -31,15 +31,15 @@ import {
     IonImg, 
     IonLabel, 
     IonButton,
-    IonItem // Add it to the imports array
+    IonItem
   ],
   templateUrl: './perfil.html',
   styleUrls: []
 })
 export class Perfil {
-  // You can manage profile information here
+  // Ahora el nombre completo está en una sola línea
   profile = {
-    name: 'Eder Eduardo Sanchez Valdez',
+    name: 'Eder Eduardo Sanchez Valdez', 
     role: 'Cliente',
     email: 'e.sanchez@cjf.com.mx'
   };

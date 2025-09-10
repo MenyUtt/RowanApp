@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary" class="header-toolbar">
+  <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/menu"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center header-title">PERFIL</ion-title>
+    <ion-title class="header-title">PERFIL</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,6 +45,28 @@
 </ion-content>
 
 <style>
+  /* === Modificaciones CSS === */
+
+  ion-toolbar {
+    --background: #e70043; /* Cambiado a color rojo */
+    color: white;
+  }
+
+  .header-title {
+    color: white;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25em;
+    pointer-events: none;
+  }
+
   .profile-page {
     --background: #fff;
     display: flex;
@@ -52,30 +74,13 @@
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-  }
-  
-  .header-toolbar {
-    --background: #e70043; /* Color rojo para la barra de título */
-    color: white;
-  }
-  
-  .header-title {
-    color: white;
-  }
-
-  .main-container {
-    position: relative;
-    width: 100%;
-    max-width: 380px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 50px;
+    padding-top: 20px; /* Desplaza el contenido de la página hacia abajo para evitar que lo tape la barra superior */
   }
   
   .card-container {
     position: relative;
     width: 100%;
+    max-width: 380px;
     border: 3px solid #e70043;
     border-radius: 30px;
     padding: 60px 20px 20px 20px;
@@ -84,6 +89,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px; /* Ajuste adicional para desplazar el card principal hacia abajo */
   }
   
   .profile-logo-container {
@@ -135,6 +141,9 @@
   .profile-label-value {
     color: #555;
     font-size: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .logout-button {
