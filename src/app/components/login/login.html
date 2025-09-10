@@ -43,18 +43,18 @@
 
 <style>
   .login-page {
-    --background: #fff; /* Fondo blanco */
+    --background: #fff;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinea al inicio para dejar espacio al logo superior */
-    min-height: 100vh; /* Asegura que ocupe toda la altura de la vista */
-    padding-top: 50px; /* Espacio para el logo superior */
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 0;
   }
 
   .main-container {
     position: relative;
     width: 100%;
-    max-width: 380px; /* Ancho máximo similar al de la imagen */
+    max-width: 380px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,35 +62,37 @@
 
   .top-logo-container {
     position: absolute;
-    top: -50px; /* Ajusta la posición para que el logo quede encima del borde */
+    top: -50px;
     z-index: 10;
   }
 
   .top-logo-container ion-img {
-    width: 100px; /* Tamaño del logo superior */
+    width: 100px;
     height: auto;
+    margin-top: 90px;
   }
 
   .form-card-container {
     width: 100%;
-    border: 3px solid #e70043; /* Borde rojo del contenedor principal */
-    border-radius: 30px; /* Bordes redondeados */
-    padding: 60px 20px 20px 20px; /* Padding para ajustar el contenido y el logo superior */
+    border: 3px solid #e70043;
+    border-radius: 30px;
+    padding: 60px 20px 20px 20px;
     background: #fff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-top: 90px;
   }
 
   .form-card {
-    background: transparent; /* Fondo transparente para que el color del contenedor principal sea visible */
-    box-shadow: none; /* Eliminar sombra de la tarjeta */
-    margin: 0; /* Eliminar margen predeterminado de ion-card */
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
   }
 
   .input-field {
     margin-bottom: 20px;
     --background: #fff;
-    border: 1px solid #ccc; /* Borde sutil para los campos de entrada */
+    border: 1px solid #ccc;
     border-radius: 5px;
     --padding-start: 10px;
   }
@@ -103,7 +105,7 @@
   }
 
   .login-button {
-    --background: #6fbb3d; /* Color verde del botón "Iniciar Sesión" */
+    --background: #6fbb3d;
     --border-radius: 20px;
     height: 45px;
     font-size: 1.1em;
@@ -111,8 +113,8 @@
   }
   
   .forgot-button {
-    --background: #e70043; /* Color rojo del botón "¿Olvidaste tu contraseña?" */
-    --color: #fff; /* Color del texto blanco */
+    --background: #e70043;
+    --color: #fff;
     --border-radius: 20px;
     height: 45px;
     font-size: 1.1em;
@@ -126,18 +128,25 @@
   }
 
   .register-link a {
-    color: #e70043; /* Color rojo para el enlace "Regístrate" */
+    color: #e70043;
     font-weight: bold;
     text-decoration: none;
   }
   
   .bottom-logo-container {
-    margin-top: 30px; /* Espacio entre el contenedor principal y el logo inferior */
+    margin-top: 30px;
     text-align: center;
   }
   
   .bottom-logo-container ion-img {
-    width: 200px; /* Tamaño del logo inferior */
+    width: 200px;
     height: auto;
+  }
+  
+  /* Media query para iPhone 16 Pro Max */
+  @media only screen and (min-width: 440px) {
+    .main-container {
+      max-width: 420px;
+    }
   }
 </style>

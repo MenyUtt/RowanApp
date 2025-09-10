@@ -57,9 +57,9 @@
     --background: #fff;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; /* Modificado de flex-start a center */
     min-height: 100vh;
-    padding-top: 50px;
+    padding-top: 0; /* Eliminado el padding superior ya que no es necesario */
   }
 
   .main-container {
@@ -80,6 +80,7 @@
   .top-logo-container ion-img {
     width: 100px;
     height: auto;
+    margin-top: 30px;
   }
 
   .form-card-container {
@@ -90,6 +91,7 @@
     background: #fff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-top: 30px;
   }
 
   .form-card {
@@ -117,13 +119,13 @@
     --background: transparent;
     --inner-padding-end: 0;
     margin: 20px 0;
-    display: flex; /* Habilita flexbox para el contenedor */
-    justify-content: center; /* Centra horizontalmente el contenido */
-    align-items: center; /* Centra verticalmente el contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
   
   .terms-group ion-label {
-    margin-left: 10px; /* Ajusta el espacio entre el checkbox y el texto */
+    margin-left: 10px;
     font-size: 0.9em;
     color: #333;
 }
@@ -133,7 +135,7 @@
 }
   
   .register-button {
-    --background: #e70043; /* Color rojo del botón "Registrarse" */
+    --background: #e70043;
     --border-radius: 20px;
     height: 45px;
     font-size: 1.1em;
@@ -147,7 +149,7 @@
   }
   
   .login-link a {
-    color: #007bff; /* Color azul del enlace "Inicia Sesión" */
+    color: #007bff;
     font-weight: bold;
     text-decoration: none;
   }
@@ -160,5 +162,12 @@
   .bottom-logo-container ion-img {
     width: 200px;
     height: auto;
+  }
+
+  /* Media query para iPhone 16 Pro Max */
+  @media only screen and (min-width: 440px) {
+    .main-container {
+      max-width: 420px;
+    }
   }
 </style>
