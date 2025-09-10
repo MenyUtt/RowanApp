@@ -10,6 +10,7 @@ import {
   IonBackButton, 
   IonSearchbar, 
   IonSelect, 
+  IonSelectOption, // Import IonSelectOption
   IonButton, 
   IonIcon, 
   IonCard, 
@@ -37,6 +38,7 @@ import { filterOutline } from 'ionicons/icons';
     IonBackButton, 
     IonSearchbar, 
     IonSelect, 
+    IonSelectOption, // Add IonSelectOption to the imports array
     IonButton, 
     IonIcon, 
     IonCard, 
@@ -56,7 +58,7 @@ export class Tickets {
     Fecha: '15/05/2025',
     Sistema: 'Accesos',
     Descripcion: 'Barrera Vehicular sin funciones',
-    Asignado: 'Yoshep Emmanuel Garza Padilla',
+    Asignado: 'NA',
     Edificio: 'SEDE',
     Status: 'Pendiente'
   };

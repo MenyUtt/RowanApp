@@ -11,10 +11,13 @@
   <div class="search-filter-container">
     <ion-searchbar class="ticket-searchbar" placeholder="ID"></ion-searchbar>
     <div class="filter-sort-group">
-      <ion-select placeholder="SISTEMA" class="system-select"></ion-select>
-      <ion-button class="filter-button">
-        <ion-icon name="filter-outline"></ion-icon>
-      </ion-button>
+      <ion-select placeholder="SISTEMA" class="system-select">
+        <ion-select-option value="fas">FAS (Alarma de Incendio)</ion-select-option>
+        <ion-select-option value="accesos">Sistema de Accesos</ion-select-option>
+        <ion-select-option value="cctv">CCTV</ion-select-option>
+        <ion-select-option value="sonido">Sistema Supresion Incendios</ion-select-option>
+        <ion-select-option value="sonido">Sistema Supresion Agente Limpio</ion-select-option>
+      </ion-select>
     </div>
   </div>
 
@@ -22,10 +25,14 @@
     <ion-card class="ticket-card">
       <ion-card-content class="ticket-card-content">
         <div class="ticket-header">
-          <p class="ticket-description-title">ID:</p>
-          <p class="ticket-description">{{ Tickets.ID }}</p>
-          <p class="ticket-description-title">Fecha:</p>
-          <p class="ticket-description">{{ Tickets.Fecha }}</p>
+          <div class="id-group">
+            <p class="ticket-description-title">ID:</p>
+            <p class="ticket-description">{{ Tickets.ID }}</p>
+          </div>
+          <div class="date-group">
+            <p class="ticket-description-title">Fecha:</p>
+            <p class="ticket-description">{{ Tickets.Fecha }}</p>
+          </div>
         </div>
         <div class="ticket-info">
           <p class="ticket-description-title">Sistema:</p>
@@ -36,12 +43,22 @@
           <p class="ticket-description">{{ Tickets.Asignado }}</p>
         </div>
         <div class="ticket-actions">
-          <ion-button class="status-button pending-status">{{ Tickets.Status }}</ion-button>
+          <span class="status-badge" [ngClass]="{'pending-status': Tickets.Status === 'Pendiente', 'review-status': Tickets.Status === 'Revisión', 'attended-status': Tickets.Status === 'Atendido'}">
+            {{ Tickets.Status }}
+          </span>
           <div class="icon-group">
-            <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
-            <ion-img src="RowanIcon/PDF.png" alt="PDF"></ion-img>
-            <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
-            <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
+            <ion-button class="action-button">
+              <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
+            </ion-button>
+            <ion-button class="action-button">
+              <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
+            </ion-button>
+            <ion-button class="action-button">
+              <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
+            </ion-button>
+            <ion-button class="action-button">
+              <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
+            </ion-button>
           </div>
         </div>
       </ion-card-content>
@@ -50,7 +67,7 @@
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button class="add-ticket-button">
-      <ion-icon src="RowanIcon/Agregar.png"></ion-icon>
+      <ion-img src="RowanIcon/Agregar.png"></ion-img>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
@@ -108,7 +125,7 @@
 
   .system-select {
     --placeholder-color: #333;
-    --background: #ffffff;
+    --background: #ffffff00;
     border: 1px solid #ccc;
     border-radius: 20px;
     padding-left: 10px;
@@ -190,19 +207,28 @@
     margin-top: 10px;
   }
 
-  .status-button {
-    --border-radius: 20px;
+  .status-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
     font-size: 0.8em;
+    font-weight: bold;
+    color: white;
     text-transform: none;
     height: 30px;
+    line-height: 20px;
   }
 
   .pending-status {
-    --background: #e70043; /* Color rojo para "Pendiente" */
+    background-color: #e70043; /* Color rojo para "Pendiente" */
   }
 
-  .completed-status {
-    --background: #6fbb3d; /* Color verde para "Resuelto" */
+  .review-status {
+    background-color: #ffa500; /* Color naranja para "Revisión" */
+  }
+  
+  .attended-status {
+    background-color: #6fbb3d; /* Color verde para "Atendido" */
   }
 
   .icon-group {
@@ -214,15 +240,25 @@
     width: 30px;
     height: 30px;
   }
+  .action-button {
+    --background: transparent; /* Fondo transparente para que el botón no tenga color */
+    --box-shadow: none;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    height: 30px;
+    width: 30px;
+  }
 
-  .ion-img-pdf {
-    width: 60px;
-    height: 60px;
+  .action-button ion-img {
+    width: 100%;
+    height: 100%;
   }
 
   /* === Botón FAB para agregar === */
   .add-ticket-button {
-    --background: #6fbb3d;
+    --background: #6fbb3d44;
     --border-radius: 50%;
     width: 56px;
     height: 56px;
