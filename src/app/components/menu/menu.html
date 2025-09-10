@@ -1,93 +1,96 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edificios - Rowan Networks</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
-        .screen-container { width: 100%; max-width: 450px; background-color: #ffffff; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; padding: 20px; }
-        .header-logo-container { margin-bottom: 20px; text-align: center; }
-        .header-logo-container img { width: 80px; height: auto; }
-        .header-title { font-size: 2.5em; color: #d9232d; font-weight: 700; margin-top: 0; margin-bottom: 20px; }
-        .buttons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 400px; }
-        .grid-button { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background-color: #f8f8f8; border: 2px solid #e0e0e0; border-radius: 10px; text-decoration: none; color: #333; font-weight: 600; transition: all 0.3s ease; box-sizing: border-box; }
-        .grid-button:hover { background-color: #e6e6e6; border-color: #d9232d; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-        .button-icon img { width: 60px; height: auto; margin-bottom: 10px; }
-        .button-text { font-size: 1.1em; color: #d9232d; }
-        .footer-logo { margin-top: 20px; width: 100%; text-align: center; }
-        .footer-logo img { max-width: 200px; }
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>EDIFICIOS</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/login']">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-        @media (max-width: 767px) {
-            body { padding: 0; }
-            .screen-container { min-height: 100vh; max-width: none; border-radius: 0; box-shadow: none; padding: 20px; }
-            .buttons-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-    
-    <div class="screen-container">
-        
-        <div class="header-logo-container">
-             <img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan">
-        </div>
+<ion-content class="ion-padding menu-page">
+  <div class="buttons-grid">
+    <ion-card class="grid-button" [routerLink]="['/login']">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Edificio.png" alt="Sede Icono"></ion-img>
+        <ion-label class="button-text">SEDE</ion-label>
+      </ion-card-content>
+    </ion-card>
 
-        <h1 class="header-title">EDIFICIOS</h1>
+    <ion-card class="grid-button">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Edificio.png" alt="CJPF Icono"></ion-img>
+        <ion-label class="button-text">CJPF</ion-label>
+      </ion-card-content>
+    </ion-card>
 
-        <div class="buttons-grid">
-            
-            <a [routerLink]="['/login']" class="grid-button">
-                <div class="button-icon">
-                    <img src="RowanIcon/Edificio.png" alt="Sede Icono">
-                </div>
-                <div class="button-text">SEDE</div>
-            </a>
-            
-            <a href="#" class="grid-button">
-                <div class="button-icon">
-                     <img src="RowanIcon/Edificio.png" alt="CJPF Icono">
-                </div>
-                <div class="button-text">CJPF</div>
-            </a>
+    <ion-card class="grid-button">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Edificio.png" alt="Palacio Icono"></ion-img>
+        <ion-label class="button-text">PALACIO</ion-label>
+      </ion-card-content>
+    </ion-card>
 
-            <a href="#" class="grid-button">
-                <div class="button-icon">
-                     <img src="RowanIcon/Edificio.png" alt="Palacio Icono">
-                </div>
-                <div class="button-text">PALACIO</div>
-            </a>
+    <ion-card class="grid-button">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Edificio.png" alt="Senda Icono"></ion-img>
+        <ion-label class="button-text">SENDA</ion-label>
+      </ion-card-content>
+    </ion-card>
 
-            <a href="#" class="grid-button">
-                <div class="button-icon">
-                     <img src="RowanIcon/Edificio.png" alt="Senda Icono">
-                </div>
-                <div class="button-text">SENDA</div>
-            </a>
+    <ion-card class="grid-button">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Edificio.png" alt="España Icono"></ion-img>
+        <ion-label class="button-text">ESPAÑA</ion-label>
+      </ion-card-content>
+    </ion-card>
 
-            <a href="#" class="grid-button">
-                <div class="button-icon">
-                     <img src="RowanIcon/Edificio.png" alt="España Icono">
-                </div>
-                <div class="button-text">ESPAÑA</div>
-            </a>
+    <ion-card class="grid-button">
+      <ion-card-content>
+        <ion-img src="RowanIcon/Info.png" alt="Información Icono"></ion-img>
+        <ion-label class="button-text">INFO</ion-label>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
 
-            <a href="#" class="grid-button">
-                <div class="button-icon">
-                     <img src="RowanIcon/Info.png" alt="Información Icono">
-                </div>
-                <div class="button-text">INFO</div>
-            </a>
+<style>
+  .menu-page {
+    --background: #f0f2f5;
+  }
+  
+  .buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .grid-button {
+    --background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
 
-        </div>
+  .grid-button:hover {
+    transform: translateY(-3px);
+  }
 
-        <div class="footer-logo">
-             <img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks">
-        </div>
+  .grid-button ion-img {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+  }
 
-    </div>
-
-</body>
-</html>
+  .button-text {
+    font-weight: 600;
+    color: var(--ion-color-primary);
+    font-size: 1.1em;
+    margin-top: 10px;
+    display: block;
+  }
+</style>
