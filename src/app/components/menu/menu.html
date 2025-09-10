@@ -1,96 +1,151 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>EDIFICIOS</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/login']">
-        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding menu-page">
-  <div class="buttons-grid">
-    <ion-card class="grid-button" [routerLink]="['/login']">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Edificio.png" alt="Sede Icono"></ion-img>
-        <ion-label class="button-text">SEDE</ion-label>
-      </ion-card-content>
-    </ion-card>
+  <div class="header-content">
+    <div class="top-logo-container">
+      <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan"></ion-img>
+    </div>
+    <h1 class="header-title">EDIFICIOS</h1>
+  </div>
 
-    <ion-card class="grid-button">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Edificio.png" alt="CJPF Icono"></ion-img>
-        <ion-label class="button-text">CJPF</ion-label>
-      </ion-card-content>
-    </ion-card>
+  <ion-grid fixed>
+    <ion-row class="buttons-grid">
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button" [routerLink]="['/login']">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Edificio.png" alt="Sede Icono"></ion-img>
+            <ion-label class="button-text">SEDE</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card class="grid-button">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Edificio.png" alt="Palacio Icono"></ion-img>
-        <ion-label class="button-text">PALACIO</ion-label>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Edificio.png" alt="CJPF Icono"></ion-img>
+            <ion-label class="button-text">CJPF</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card class="grid-button">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Edificio.png" alt="Senda Icono"></ion-img>
-        <ion-label class="button-text">SENDA</ion-label>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Edificio.png" alt="Palacio Icono"></ion-img>
+            <ion-label class="button-text">PALACIO</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card class="grid-button">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Edificio.png" alt="España Icono"></ion-img>
-        <ion-label class="button-text">ESPAÑA</ion-label>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Edificio.png" alt="Senda Icono"></ion-img>
+            <ion-label class="button-text">SENDA</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card class="grid-button">
-      <ion-card-content>
-        <ion-img src="RowanIcon/Info.png" alt="Información Icono"></ion-img>
-        <ion-label class="button-text">INFO</ion-label>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Edificio.png" alt="España Icono"></ion-img>
+            <ion-label class="button-text">ESPAÑA</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button">
+          <ion-card-content>
+            <ion-img src="RowanIcon/Info.png" alt="Información Icono"></ion-img>
+            <ion-label class="button-text">INFO</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="footer-logo">
+    <ion-img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks"></ion-img>
   </div>
 </ion-content>
 
 <style>
   .menu-page {
-    --background: #f0f2f5;
+    --background: #ffffff; /* Fondo de la vista en color blanco */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .top-logo-container ion-img {
+    width: 60px;
+    height: auto;
   }
   
+  .header-title {
+    font-size: 2em;
+    color: #e70043;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
   .buttons-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    padding: 0 10px;
   }
   
   .grid-button {
-    --background: #ffffff;
+    --background: linear-gradient(135deg, #f8f8f8, #e0e0e0); /* Degradado gris */
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    height: 100%;
   }
 
   .grid-button:hover {
     transform: translateY(-3px);
   }
 
+  .grid-button ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+  }
+
   .grid-button ion-img {
     width: 60px;
     height: 60px;
-    margin: auto;
+    margin-bottom: 10px;
   }
 
   .button-text {
     font-weight: 600;
-    color: var(--ion-color-primary);
+    color: #e70043;
     font-size: 1.1em;
-    margin-top: 10px;
-    display: block;
+  }
+  
+  .footer-logo {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex; /* Añade display flex para el contenedor del logo del footer */
+    justify-content: center; /* Centra horizontalmente */
+    width: 100%;
+  }
+  
+  .footer-logo ion-img {
+    width: 200px;
+    height: auto;
   }
 </style>

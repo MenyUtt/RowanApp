@@ -1,119 +1,143 @@
-<ion-content class="ion-padding ion-text-center login-page">
-  <div class="header-logo-container">
-    <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan"></ion-img>
-  </div>
+<ion-content class="ion-padding login-page">
+  <div class="main-container">
+    <div class="top-logo-container">
+      <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan"></ion-img>
+    </div>
 
-  <div class="form-wrapper">
-    <ion-card class="form-card">
-      <ion-card-header>
-        <ion-card-title class="ion-text-center">Iniciar Sesión</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list lines="none">
-          <ion-item class="input-field">
-            <ion-input label="E-mail" label-placement="floating" type="email" id="email" name="email"></ion-input>
-          </ion-item>
+    <div class="form-card-container">
+      <ion-card class="form-card">
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item class="input-field">
+              <ion-label position="stacked">E-mail</ion-label>
+              <ion-input type="email" id="email" name="email"></ion-input>
+            </ion-item>
 
-          <ion-item class="input-field">
-            <ion-input label="Contraseña" label-placement="floating" type="password" id="password" name="password"></ion-input>
-          </ion-item>
-        </ion-list>
+            <ion-item class="input-field">
+              <ion-label position="stacked">Contraseña</ion-label>
+              <ion-input type="password" id="password" name="password"></ion-input>
+            </ion-item>
+          </ion-list>
 
-        <ion-button expand="block" class="ion-margin-top login-button" [routerLink]="['/menu']">
-          Iniciar Sesión
-        </ion-button>
+          <ion-button expand="block" class="ion-margin-top login-button" [routerLink]="['/menu']">
+            Iniciar Sesión
+          </ion-button>
 
-        <ion-button expand="block" fill="clear" color="secondary" class="ion-margin-top forgot-button">
-          ¿Olvidaste tu contraseña?
-        </ion-button>
+          <ion-button expand="block" fill="solid" class="ion-margin-top forgot-button">
+            ¿Olvidaste tu contraseña?
+          </ion-button>
 
-        <p class="register-link">
-          <span>¿Aún no tienes cuenta?</span>
-          <a [routerLink]="['/register']">Regístrate</a>
-        </p>
-      </ion-card-content>
-    </ion-card>
-  </div>
+          <p class="register-link ion-text-center">
+            <span>¿Aun no tienes cuenta? </span>
+            <a [routerLink]="['/register']">Regístrate</a>
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
 
-  <div class="footer-logo">
-    <ion-img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks"></ion-img>
+    <div class="bottom-logo-container">
+      <ion-img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks"></ion-img>
+    </div>
   </div>
 </ion-content>
 
 <style>
   .login-page {
-    --background: linear-gradient(135deg, var(--ion-color-tertiary), var(--ion-color-secondary));
-  }
-  
-  .header-logo-container {
-    padding-top: 50px;
-    padding-bottom: 20px;
-  }
-  
-  .header-logo-container ion-img {
-    width: 100px;
-    height: auto;
-    margin: auto;
-  }
-
-  .form-wrapper {
+    --background: #fff; /* Fondo blanco */
     display: flex;
     justify-content: center;
+    align-items: flex-start; /* Alinea al inicio para dejar espacio al logo superior */
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la vista */
+    padding-top: 50px; /* Espacio para el logo superior */
+  }
+
+  .main-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px; /* Ancho máximo similar al de la imagen */
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 20px 0;
+  }
+
+  .top-logo-container {
+    position: absolute;
+    top: -50px; /* Ajusta la posición para que el logo quede encima del borde */
+    z-index: 10;
+  }
+
+  .top-logo-container ion-img {
+    width: 100px; /* Tamaño del logo superior */
+    height: auto;
+  }
+
+  .form-card-container {
+    width: 100%;
+    border: 3px solid #e70043; /* Borde rojo del contenedor principal */
+    border-radius: 30px; /* Bordes redondeados */
+    padding: 60px 20px 20px 20px; /* Padding para ajustar el contenido y el logo superior */
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
 
   .form-card {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: transparent; /* Fondo transparente para que el color del contenedor principal sea visible */
+    box-shadow: none; /* Eliminar sombra de la tarjeta */
+    margin: 0; /* Eliminar margen predeterminado de ion-card */
   }
 
-  .form-card ion-card-title {
-    font-size: 2em;
-    font-weight: bold;
-    color: var(--ion-color-primary);
-  }
-  
   .input-field {
-    margin-bottom: 15px;
-    --background: var(--ion-color-light);
-    --border-radius: 10px;
-    --padding-start: 15px;
-    --border-color: var(--ion-color-medium);
+    margin-bottom: 20px;
+    --background: #fff;
+    border: 1px solid #ccc; /* Borde sutil para los campos de entrada */
+    border-radius: 5px;
+    --padding-start: 10px;
+  }
+
+  .input-field ion-label {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
 
   .login-button {
-    --background: var(--ion-color-success);
+    --background: #6fbb3d; /* Color verde del botón "Iniciar Sesión" */
     --border-radius: 20px;
+    height: 45px;
+    font-size: 1.1em;
     font-weight: 600;
   }
   
   .forgot-button {
-    --color: var(--ion-color-primary);
-    font-weight: 500;
+    --background: #e70043; /* Color rojo del botón "¿Olvidaste tu contraseña?" */
+    --color: #fff; /* Color del texto blanco */
+    --border-radius: 20px;
+    height: 45px;
+    font-size: 1.1em;
+    font-weight: 600;
   }
 
   .register-link {
-    margin-top: 20px;
+    margin-top: 25px;
     font-size: 0.9em;
+    color: #333;
   }
 
   .register-link a {
-    color: var(--ion-color-primary);
+    color: #e70043; /* Color rojo para el enlace "Regístrate" */
     font-weight: bold;
     text-decoration: none;
   }
   
-  .footer-logo {
-    padding: 20px 0;
+  .bottom-logo-container {
+    margin-top: 30px; /* Espacio entre el contenedor principal y el logo inferior */
+    text-align: center;
   }
   
-  .footer-logo ion-img {
-    width: 150px;
+  .bottom-logo-container ion-img {
+    width: 200px; /* Tamaño del logo inferior */
     height: auto;
-    margin: auto;
   }
 </style>
