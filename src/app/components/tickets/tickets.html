@@ -37,7 +37,7 @@
           <div class="ticket-header">
             <div class="id-group">
               <p class="ticket-description-title">ID:</p>
-              <p class="ticket-description">{{ ticket.codigo_ticket }}</p>
+              <p class="ticket-description">{{ ticket.id }}</p>
             </div>
             <div class="date-group">
               <p class="ticket-description-title">Fecha:</p>
@@ -64,12 +64,16 @@
               <ion-button class="action-button">
                 <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
               </ion-button>
-              <ion-button class="action-button">
-                <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
-              </ion-button>
+              @if (userRole() === 'Cliente' || userRole() === 'Coordinador') {
+                <ion-button class="action-button">
+                  <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
+                </ion-button>
+              }
+              @if (userRole() === 'Cliente') { 
               <ion-button class="action-button">
                 <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
               </ion-button>
+              }
             </div>
           </div>
         </ion-card-content>

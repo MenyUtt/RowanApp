@@ -69,9 +69,9 @@ export class Tickets implements OnInit {
   }
 
   loadTicketsAndSystems(edificioId: string) {
-    const edificioRequest = this.http.get<any>(`http://localhost:3000/edificios/${edificioId}`);
-    const ticketsRequest = this.http.get<any[]>(`http://localhost:3000/tickets/por-edificio/${edificioId}`);
-    const sistemasRequest = this.http.get<any[]>(`http://localhost:3000/tipos-sistema`);
+    const edificioRequest = this.http.get<any>(`http://192.168.1.73:3000/edificios/${edificioId}`);
+    const ticketsRequest = this.http.get<any[]>(`http://192.168.1.73:3000/tickets/por-edificio/${edificioId}`);
+    const sistemasRequest = this.http.get<any[]>(`http://192.168.1.73:3000/tipos-sistema`);
 
     forkJoin([edificioRequest, ticketsRequest, sistemasRequest]).subscribe({
       next: ([edificio, tickets, sistemas]) => {
@@ -149,7 +149,7 @@ export class Tickets implements OnInit {
       tipo_sistema_id: this.newTicket.tipoSistemaId
     };
 
-    this.http.post('http://localhost:3000/tickets', ticketData).subscribe({
+    this.http.post('http://192.168.1.73:3000/tickets', ticketData).subscribe({
       next: (response) => {
         alert('Ticket creado exitosamente!');
         this.closeAddTicketModal();

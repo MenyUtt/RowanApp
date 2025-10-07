@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule
   selector: 'app-profile',
   standalone: true,
   imports: [
-    RouterLink, 
     IonContent, 
     IonHeader, 
     IonToolbar, 
