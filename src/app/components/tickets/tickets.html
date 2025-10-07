@@ -78,12 +78,41 @@
   </div>
   @if (userRole() === 'Cliente') {  
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button class="add-ticket-button">
+      <ion-fab-button class="add-ticket-button" (click)="openAddTicketModal()">
         <ion-img src="RowanIcon/Agregar.png"></ion-img>
       </ion-fab-button>
     </ion-fab>
   }
 </ion-content>
+
+<div class="modal-overlay" [class.show]="isAddTicketModalOpen()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>AGREGAR TICKET</h2>
+      <ion-icon name="close-circle-outline" class="close-icon" (click)="closeAddTicketModal()"></ion-icon>
+    </div>
+    <div class="modal-body">
+      <p><strong>Fecha:</strong> {{ newTicketDate | date:'dd/MM/yyyy' }}</p>
+      <ion-select aria-label="Tipo de Sistema" [(ngModel)]="newTicket.tipoSistemaId" interface="popover" placeholder="Selecciona un sistema">
+        @for (sistema of tiposDeSistema(); track sistema.id) {
+          <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+        }
+      </ion-select>
+      <ion-textarea
+        label="Descripción:"
+        labelPlacement="floating"
+        placeholder="Introduce la descripción del problema"
+        rows="6"
+        maxlength="500"
+        [(ngModel)]="newTicket.descripcion"
+        autoGrow="true"
+      ></ion-textarea>
+    </div>
+    <div class="modal-footer">
+      <ion-button expand="block" (click)="saveNewTicket()">GUARDAR</ion-button>
+    </div>
+  </div>
+</div>
 
 
 <style>
@@ -284,5 +313,98 @@
       max-width: 440px;
       margin: 0 auto;
     }
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.show .modal-content {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+
+  .close-icon {
+    font-size: 2em;
+    color: #999;
+    cursor: pointer;
+  }
+
+  .close-icon:hover {
+    color: #666;
+  }
+
+  .modal-body p {
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .modal-body ion-select {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .modal-body ion-textarea {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .modal-footer {
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .modal-footer ion-button {
+    --background: #3880ff; /* Color primario de Ionic */
+    --color: white;
+    font-weight: bold;
+    border-radius: 8px;
   }
 </style>
