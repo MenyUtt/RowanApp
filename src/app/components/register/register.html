@@ -7,41 +7,43 @@
     <div class="form-card-container">
       <ion-card class="form-card">
         <ion-card-content>
-          <ion-list lines="none">
-            <ion-item class="input-field">
-              <ion-label position="stacked">E-mail</ion-label>
-              <ion-input type="email" id="email" name="email"></ion-input>
-            </ion-item>
+          <form (ngSubmit)="register()">
+            <ion-list lines="none">
+              <ion-item class="input-field">
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input type="text" name="name" [(ngModel)]="userData.nombre" required></ion-input>
+              </ion-item>
+              
+              <ion-item class="input-field">
+                <ion-label position="stacked">Apellidos</ion-label>
+                <ion-input type="text" name="apellidos" [(ngModel)]="userData.apellidos" required></ion-input>
+              </ion-item>
 
-            <ion-item class="input-field">
-              <ion-label position="stacked">Nombre</ion-label>
-              <ion-input type="text" id="name" name="name"></ion-input>
-            </ion-item>
+              <ion-item class="input-field">
+              <ion-label position="stacked">Teléfono (Opcional)</ion-label>
+              <ion-input type="tel" name="telefono" [(ngModel)]="userData.telefono"></ion-input>
+              </ion-item>
 
-            <ion-item class="input-field">
-              <ion-label position="stacked">Contraseña</ion-label>
-              <ion-input type="password" id="password" name="password"></ion-input>
-            </ion-item>
+              <ion-item class="input-field">
+                <ion-label position="stacked">E-mail</ion-label>
+                <ion-input type="email" name="email" [(ngModel)]="userData.correo" required></ion-input>
+              </ion-item>
 
-            <ion-item class="input-field">
-              <ion-label position="stacked">Confirmar Contraseña</ion-label>
-              <ion-input type="password" id="confirm-password" name="confirm-password"></ion-input>
-            </ion-item>
-          </ion-list>
+              <ion-item class="input-field">
+                <ion-label position="stacked">Contraseña</ion-label>
+                <ion-input type="password" name="password" [(ngModel)]="userData.contrasena" required></ion-input>
+              </ion-item>
+            </ion-list>
 
-          <ion-item class="terms-group" lines="none">
-            <ion-checkbox slot="start" id="terms" name="terms"></ion-checkbox>
-            <ion-label>Acepto <a href="#">Términos y Condiciones</a></ion-label>
-        </ion-item>
+            <ion-button expand="block" class="ion-margin-top register-button" type="submit">
+              Registrarse
+            </ion-button>
 
-          <ion-button expand="block" class="ion-margin-top register-button">
-            Registrarse
-          </ion-button>
-
-          <p class="login-link ion-text-center">
-            <span>¿Ya tienes cuenta? </span>
-            <a [routerLink]="['/login']">Inicia Sesión</a>
-          </p>
+            <p class="login-link ion-text-center">
+              <span>¿Ya tienes cuenta? </span>
+              <a [routerLink]="['/login']">Inicia Sesión</a>
+            </p>
+          </form>
         </ion-card-content>
       </ion-card>
     </div>

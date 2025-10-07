@@ -3,74 +3,88 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/menu" class="back-button"></ion-back-button>
     </ion-buttons>
-    <ion-title class="header-title">{{ Tickets.Edificio }}</ion-title>
+    <ion-title class="header-title">{{ edificioNombre() | uppercase }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding tickets-page">
   <div class="search-filter-container">
-    <ion-searchbar class="ticket-searchbar" placeholder="ID"></ion-searchbar>
+    <ion-searchbar 
+      class="ticket-searchbar" 
+      placeholder="Buscar por ID"
+      [debounce]="300"
+      (ionInput)="onSearchChange($event)">
+    </ion-searchbar>
+    
     <div class="filter-sort-group">
-      <ion-select placeholder="SISTEMA" class="system-select">
-        <ion-select-option value="fas">FAS (Alarma de Incendio)</ion-select-option>
-        <ion-select-option value="accesos">Sistema de Accesos</ion-select-option>
-        <ion-select-option value="cctv">CCTV</ion-select-option>
-        <ion-select-option value="sonido">Sistema Supresion Incendios</ion-select-option>
-        <ion-select-option value="sonido">Sistema Supresion Agente Limpio</ion-select-option>
+      <ion-select 
+        placeholder="Sistema" 
+        class="system-select"
+        [(ngModel)]="selectedSystem"
+        (ionChange)="onSystemChange($event)">
+        <ion-select-option value="todos">Todos los Sistemas</ion-select-option>
+        @for (sistema of tiposDeSistema(); track sistema.id) {
+          <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+        }
       </ion-select>
     </div>
   </div>
 
   <div class="tickets-list">
-    <ion-card class="ticket-card">
-      <ion-card-content class="ticket-card-content">
-        <div class="ticket-header">
-          <div class="id-group">
-            <p class="ticket-description-title">ID:</p>
-            <p class="ticket-description">{{ Tickets.ID }}</p>
+    @for (ticket of tickets(); track ticket.id) {
+      <ion-card class="ticket-card">
+        <ion-card-content class="ticket-card-content">
+          <div class="ticket-header">
+            <div class="id-group">
+              <p class="ticket-description-title">ID:</p>
+              <p class="ticket-description">{{ ticket.codigo_ticket }}</p>
+            </div>
+            <div class="date-group">
+              <p class="ticket-description-title">Fecha:</p>
+              <p class="ticket-description">{{ ticket.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+            </div>
           </div>
-          <div class="date-group">
-            <p class="ticket-description-title">Fecha:</p>
-            <p class="ticket-description">{{ Tickets.Fecha }}</p>
+          <div class="ticket-info">
+            <p class="ticket-description-title">Sistema:</p>
+            <p class="ticket-description">{{ ticket.tipoSistema.nombre }}</p>
+            <p class="ticket-description-title">Descripción:</p>
+            <p class="ticket-description">{{ ticket.descripcion }}</p>
+            <p class="ticket-description-title">Asignado a:<br></p>
+            <p class="ticket-description">NA</p>
           </div>
-        </div>
-        <div class="ticket-info">
-          <p class="ticket-description-title">Sistema:</p>
-          <p class="ticket-description">{{ Tickets.Sistema }}</p>
-          <p class="ticket-description-title">Descripción:</p>
-          <p class="ticket-description">{{ Tickets.Descripcion }}</p>
-          <p class="ticket-description-title">Asignado a:<br></p>
-          <p class="ticket-description">{{ Tickets.Asignado }}</p>
-        </div>
-        <div class="ticket-actions">
-          <span class="status-badge" [ngClass]="{'pending-status': Tickets.Status === 'Pendiente', 'review-status': Tickets.Status === 'Revisión', 'attended-status': Tickets.Status === 'Atendido'}">
-            {{ Tickets.Status }}
-          </span>
-          <div class="icon-group">
-            <ion-button class="action-button">
-              <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
-            </ion-button>
-            <ion-button class="action-button">
-              <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
-            </ion-button>
-            <ion-button class="action-button">
-              <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
-            </ion-button>
-            <ion-button class="action-button">
-              <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
-            </ion-button>
+          <div class="ticket-actions">
+            <span class="status-badge" 
+                  [ngClass]="{'pending-status': ticket.status === 'pendiente', 'review-status': ticket.status === 'revision', 'attended-status': ticket.status === 'finalizado'}">
+              {{ ticket.status }}
+            </span>
+            <div class="icon-group">
+              <ion-button class="action-button">
+                <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
+              </ion-button>
+              <ion-button class="action-button">
+                <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
+              </ion-button>
+              <ion-button class="action-button">
+                <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
+              </ion-button>
+              <ion-button class="action-button">
+                <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
+              </ion-button>
+            </div>
           </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
+        </ion-card-content>
+      </ion-card>
+    }
   </div>
-  
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button class="add-ticket-button">
-      <ion-img src="RowanIcon/Agregar.png"></ion-img>
-    </ion-fab-button>
-  </ion-fab>
+  @if (userRole() === 'Cliente') {  
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button class="add-ticket-button">
+        <ion-img src="RowanIcon/Agregar.png"></ion-img>
+      </ion-fab-button>
+    </ion-fab>
+  }
 </ion-content>
+
 
 <style>
   /* === Estilos generales === */

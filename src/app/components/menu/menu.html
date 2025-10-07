@@ -9,7 +9,7 @@
   <ion-grid fixed>
     <ion-row class="buttons-grid">
       <ion-col size="6" class="button-container">
-        <ion-card class="grid-button" [routerLink]="['/tickets']">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 1]">
           <ion-card-content>
             <ion-label class="button-text">SEDE</ion-label>
             <ion-img src="RowanIcon/Edificio.png" alt="Sede Icono"></ion-img>
@@ -18,7 +18,7 @@
       </ion-col>
 
       <ion-col size="6" class="button-container">
-        <ion-card class="grid-button">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 2]">
           <ion-card-content>
             <ion-label class="button-text">CJPF</ion-label>
             <ion-img src="RowanIcon/Edificio.png" alt="CJPF Icono"></ion-img>
@@ -27,7 +27,7 @@
       </ion-col>
 
       <ion-col size="6" class="button-container">
-        <ion-card class="grid-button">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 6]">
           <ion-card-content>
             <ion-label class="button-text">PALACIO</ion-label>
             <ion-img src="RowanIcon/Edificio.png" alt="Palacio Icono"></ion-img>            
@@ -36,7 +36,7 @@
       </ion-col>
 
       <ion-col size="6" class="button-container">
-        <ion-card class="grid-button">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 3]">
           <ion-card-content>
             <ion-label class="button-text">SENDA</ion-label>
             <ion-img src="RowanIcon/Edificio.png" alt="Senda Icono"></ion-img>            
@@ -45,9 +45,18 @@
       </ion-col>
 
       <ion-col size="6" class="button-container">
-        <ion-card class="grid-button">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 4]">
           <ion-card-content>
             <ion-label class="button-text">ESPAÑA</ion-label>
+            <ion-img src="RowanIcon/Edificio.png" alt="España Icono"></ion-img>            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button" [routerLink]="['/tickets', 5]">
+          <ion-card-content>
+            <ion-label class="button-text">COLON</ion-label>
             <ion-img src="RowanIcon/Edificio.png" alt="España Icono"></ion-img>            
           </ion-card-content>
         </ion-card>

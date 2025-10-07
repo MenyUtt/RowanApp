@@ -24,18 +24,18 @@
           <ion-item lines="none" class="profile-item">
             <ion-label>
               <h2 class="profile-label-title">Rol:</h2>
-              <p class="profile-label-value">{{ profile.role }}</p>
+              <p class="profile-label-value">{{ profile.rol || 'No asignado' }}</p>
             </ion-label>
           </ion-item>
           <ion-item lines="none" class="profile-item">
             <ion-label>
               <h2 class="profile-label-title">E-mail:</h2>
-              <p class="profile-label-value">{{ profile.email }}</p>
+              <p class="profile-label-value">{{ profile.correo }}</p>
             </ion-label>
           </ion-item>
         </ion-card-content>
       </ion-card>
-      <ion-button expand="block" class="logout-button" [routerLink]="['/login']">Cerrar Sesión</ion-button>
+      <ion-button expand="block" class="logout-button" (click)="logout()">Cerrar Sesión</ion-button>
     </div>
     
     <div class="footer-logo-container">

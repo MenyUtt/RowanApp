@@ -7,21 +7,23 @@
     <div class="form-card-container">
       <ion-card class="form-card">
         <ion-card-content>
-          <ion-list lines="none">
-            <ion-item class="input-field">
-              <ion-label position="stacked">E-mail</ion-label>
-              <ion-input type="email" id="email" name="email"></ion-input>
-            </ion-item>
+          <form (ngSubmit)="login()">
+            <ion-list lines="none">
+              <ion-item class="input-field">
+                <ion-label position="stacked">E-mail</ion-label>
+                <ion-input type="email" id="email" name="email" [(ngModel)]="credentials.correo"></ion-input>
+              </ion-item>
 
-            <ion-item class="input-field">
-              <ion-label position="stacked">Contraseña</ion-label>
-              <ion-input type="password" id="password" name="password"></ion-input>
-            </ion-item>
-          </ion-list>
+              <ion-item class="input-field">
+                <ion-label position="stacked">Contraseña</ion-label>
+                <ion-input type="password" id="password" name="password" [(ngModel)]="credentials.contrasena"></ion-input>
+              </ion-item>
+            </ion-list>
 
-          <ion-button expand="block" class="ion-margin-top login-button" [routerLink]="['/menu']">
-            Iniciar Sesión
-          </ion-button>
+            <ion-button expand="block" class="ion-margin-top login-button" type="submit">
+              Iniciar Sesión
+            </ion-button>
+          </form>
 
           <ion-button expand="block" fill="solid" class="ion-margin-top forgot-button">
             ¿Olvidaste tu contraseña?
