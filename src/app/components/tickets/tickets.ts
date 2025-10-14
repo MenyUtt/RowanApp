@@ -37,7 +37,7 @@ export class Tickets implements OnInit {
   public searchTerm: string = '';
   public selectedSystem: any = 'todos';
 
-  // Propiedades para el modal de agregar ticket
+  // Modal para agregar
   public isAddTicketModalOpen = signal(false);
   public newTicketDate: Date = new Date();
   public newTicket = {
@@ -46,6 +46,10 @@ export class Tickets implements OnInit {
     fecha_creacion: ''
   };
   private edificioId: string | null = null;
+
+  // Propiedades para el modal de edición
+  public editingTicket = signal<any | null>(null);
+  public tecnicos = signal<any[]>([]);
 
   constructor(
     private route: ActivatedRoute,
@@ -66,12 +70,13 @@ export class Tickets implements OnInit {
     if (this.edificioId) {
       this.loadTicketsAndSystems(this.edificioId);
     }
+    this.loadTecnicos();
   }
 
   loadTicketsAndSystems(edificioId: string) {
-    const edificioRequest = this.http.get<any>(`http://192.168.1.73:3000/edificios/${edificioId}`);
-    const ticketsRequest = this.http.get<any[]>(`http://192.168.1.73:3000/tickets/por-edificio/${edificioId}`);
-    const sistemasRequest = this.http.get<any[]>(`http://192.168.1.73:3000/tipos-sistema`);
+    const edificioRequest = this.http.get<any>(`http://192.168.100.72:3000/edificios/${edificioId}`);
+    const ticketsRequest = this.http.get<any[]>(`http://192.168.100.72:3000/tickets/por-edificio/${edificioId}`);
+    const sistemasRequest = this.http.get<any[]>(`http://192.168.100.72:3000/tipos-sistema`);
 
     forkJoin([edificioRequest, ticketsRequest, sistemasRequest]).subscribe({
       next: ([edificio, tickets, sistemas]) => {
@@ -102,7 +107,7 @@ export class Tickets implements OnInit {
 
     if (this.searchTerm.trim() !== '') {
       filteredTickets = filteredTickets.filter(ticket =>
-        ticket.codigo_ticket.toLowerCase().includes(this.searchTerm.toLowerCase())
+        String(ticket.id).toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
 
@@ -115,6 +120,14 @@ export class Tickets implements OnInit {
     this.tickets.set(filteredTickets);
   }
 
+  loadTecnicos() {
+    this.http.get<any[]>(`http://192.168.100.72:3000/usuarios/tecnicos`).subscribe({
+      next: (data) => this.tecnicos.set(data),
+      error: (err) => console.error('Error al cargar técnicos:', err)
+    });
+  }
+
+  // --- Lógica para Modal de Agregar ---
   openAddTicketModal() {
     this.newTicketDate = new Date();
     this.newTicket = {
@@ -134,32 +147,69 @@ export class Tickets implements OnInit {
       alert('Por favor, selecciona un tipo de sistema y escribe una descripción.');
       return;
     }
-
     if (!this.currentUserId() || !this.edificioId) {
       alert('Error: No se pudo obtener la información del usuario o del edificio.');
       return;
     }
-
     const ticketData = {
       descripcion: this.newTicket.descripcion.trim(),
       fecha_creacion: this.newTicket.fecha_creacion,
-      status: 'pendiente', 
+      status: 'pendiente',
       cliente_id: this.currentUserId(),
       edificio_id: parseInt(this.edificioId),
       tipo_sistema_id: this.newTicket.tipoSistemaId
     };
-
-    this.http.post('http://192.168.1.73:3000/tickets', ticketData).subscribe({
-      next: (response) => {
+    this.http.post('http://192.168.100.72:3000/tickets', ticketData).subscribe({
+      next: () => {
         alert('Ticket creado exitosamente!');
         this.closeAddTicketModal();
         if (this.edificioId) {
           this.loadTicketsAndSystems(this.edificioId);
         }
       },
-      error: (error) => {
-        console.error('Error al crear el ticket:', error);
-        alert('Hubo un error al crear el ticket. Intenta de nuevo.');
+      error: (err) => {
+        console.error('Error al crear el ticket:', err);
+        alert('Hubo un error al crear el ticket.');
+      }
+    });
+  }
+
+  // --- Lógica para Modal de Editar ---
+  openEditModal(ticket: any) {
+    const ticketCopy = {
+      ...ticket,
+      tipo_sistema_id: ticket.tipoSistema.id,
+      asignado_id: ticket.usuarioAsignado?.id || null
+    };
+    this.editingTicket.set(ticketCopy);
+  }
+
+  closeEditModal() {
+    this.editingTicket.set(null);
+  }
+
+  saveTicketChanges() {
+    const ticket = this.editingTicket();
+    if (!ticket) return;
+
+    const updateData = {
+      descripcion: ticket.descripcion,
+      tipo_sistema_id: ticket.tipo_sistema_id,
+      asignado_id: ticket.asignado_id,
+      status: ticket.status
+    };
+
+    this.http.put(`http://192.168.100.72:3000/tickets/${ticket.id}`, updateData).subscribe({
+      next: () => {
+        alert('Ticket actualizado exitosamente.');
+        this.closeEditModal();
+        if (this.edificioId) {
+          this.loadTicketsAndSystems(this.edificioId);
+        }
+      },
+      error: (err) => {
+        console.error('Error al actualizar el ticket:', err);
+        alert('Hubo un error al guardar los cambios.');
       }
     });
   }

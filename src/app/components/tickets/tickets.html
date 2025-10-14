@@ -50,7 +50,7 @@
             <p class="ticket-description-title">Descripción:</p>
             <p class="ticket-description">{{ ticket.descripcion }}</p>
             <p class="ticket-description-title">Asignado a:<br></p>
-            <p class="ticket-description">NA</p>
+            <p class="ticket-description">{{ ticket.usuarioAsignado?.nombre || 'No Asignado' }}</p>
           </div>
           <div class="ticket-actions">
             <span class="status-badge" 
@@ -64,16 +64,16 @@
               <ion-button class="action-button">
                 <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
               </ion-button>
+              
               @if (userRole() === 'Cliente' || userRole() === 'Coordinador') {
-                <ion-button class="action-button">
+                <ion-button class="action-button" (click)="openEditModal(ticket)">
                   <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
                 </ion-button>
               }
-              @if (userRole() === 'Cliente') { 
+              
               <ion-button class="action-button">
                 <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
               </ion-button>
-              }
             </div>
           </div>
         </ion-card-content>
@@ -117,6 +117,46 @@
     </div>
   </div>
 </div>
+
+@if (editingTicket()) {
+  <div class="modal-overlay show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>EDITAR TICKET #{{ editingTicket()?.id }}</h2>
+        <ion-icon name="close-circle-outline" class="close-icon" (click)="closeEditModal()"></ion-icon>
+      </div>
+      <div class="modal-body">
+        <p><strong>Fecha:</strong> {{ editingTicket()?.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+        
+        <ion-select aria-label="Tipo de Sistema" [(ngModel)]="editingTicket().tipo_sistema_id" interface="popover" placeholder="Selecciona un sistema">
+          @for (sistema of tiposDeSistema(); track sistema.id) {
+            <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+          }
+        </ion-select>
+
+        <ion-select aria-label="Asignar a" [(ngModel)]="editingTicket().asignado_id" interface="popover" placeholder="Asignar a un técnico">
+          <ion-select-option [value]="null">Sin Asignar</ion-select-option>
+          @for (tecnico of tecnicos(); track tecnico.id) {
+            <ion-select-option [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</ion-select-option>
+          }
+        </ion-select>
+        
+        <ion-textarea
+          label="Descripción:"
+          labelPlacement="floating"
+          placeholder="Introduce la descripción del problema"
+          rows="6"
+          maxlength="500"
+          [(ngModel)]="editingTicket().descripcion"
+          autoGrow="true"
+        ></ion-textarea>
+      </div>
+      <div class="modal-footer">
+        <ion-button expand="block" (click)="saveTicketChanges()">GUARDAR CAMBIOS</ion-button>
+      </div>
+    </div>
+  </div>
+}
 
 
 <style>

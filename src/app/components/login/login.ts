@@ -21,7 +21,7 @@ export class Login {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    this.http.post('http://192.168.1.73:3000/auth/login', this.credentials).subscribe({
+    this.http.post('http://192.168.100.72:3000/auth/login', this.credentials).subscribe({
       next: (response: any) => {
         console.log('Login exitoso:', response);
         // Guardamos los datos del usuario en localStorage

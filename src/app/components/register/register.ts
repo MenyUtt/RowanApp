@@ -26,7 +26,7 @@ export class Register {
   constructor(private http: HttpClient, private router: Router) {}
 
   register() {
-    this.http.post('http://192.168.1.73:3000/usuarios', this.userData).subscribe({
+    this.http.post('http://192.168.100.72:3000/usuarios', this.userData).subscribe({
       next: (response) => {
         console.log('Usuario registrado exitosamente:', response);
         // Opcional: mostrar un mensaje de éxito al usuario
