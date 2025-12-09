@@ -1,0 +1,62 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.csr.html",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-edificios",
+      "urls": ["/edificios"], 
+      "cacheConfig": {
+        "strategy": "freshness", 
+        "maxSize": 20,
+        "maxAge": "1d", 
+        "timeout": "3s"
+      }
+    },
+    {
+      "name": "api-usuario-data",
+      "urls": ["/usuarios/**"], 
+      "cacheConfig": {
+        "strategy": "freshness", 
+        "maxSize": 10,
+        "maxAge": "1h",
+        "timeout": "5s"
+      }
+    },
+    {
+      "name": "api-tickets-por-edificio",
+      "urls": ["/tickets/por-edificio/**"], 
+      "cacheConfig": {
+        "strategy": "freshness", 
+        "maxSize": 50,
+        "maxAge": "2h", 
+        "timeout": "5s"
+      }
+    }
+  ]
+}

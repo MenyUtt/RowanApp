@@ -1,0 +1,197 @@
+<ion-content class="ion-padding menu-page">
+  
+  <div class="notification-wrapper">
+    <ion-button id="notif-trigger" fill="clear" class="notif-btn" (click)="onOpenNotifications()">
+      <ion-icon name="notifications-outline" size="large"></ion-icon>
+      @if (fcmService.unreadCount() > 0) {
+        <ion-badge color="danger" class="floating-badge">{{ fcmService.unreadCount() }}</ion-badge>
+      }
+    </ion-button>
+  </div>
+
+  <ion-popover trigger="notif-trigger" dismissOnSelect="true" class="notif-popover">
+    <ng-template>
+      <ion-content>
+        <div class="popover-header">Notificaciones</div>
+        
+        @if (fcmService.notifications().length === 0) {
+          <div class="empty-state">
+            <p>No tienes notificaciones nuevas.</p>
+          </div>
+        } @else {
+          <ion-list lines="full">
+            @for (notif of fcmService.notifications(); track notif) {
+              <ion-item>
+                <ion-label class="ion-text-wrap">
+                  <h3 style="font-weight: bold; color: #e70043;">{{ notif.title }}</h3>
+                  <p>{{ notif.body }}</p>
+                  <p style="font-size: 0.8em; color: #999; margin-top: 4px;">
+                    {{ notif.timestamp | date:'shortTime' }}
+                  </p>
+                </ion-label>
+              </ion-item>
+            }
+          </ion-list>
+        }
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
+  <div class="header-content">
+    <div class="top-logo-container">
+      <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan"></ion-img>
+    </div>
+    <h1 class="header-title">EDIFICIOS</h1>
+  </div>
+
+  <ion-grid fixed>
+    <ion-row class="buttons-grid">
+      @for (edificio of edificios; track edificio.id) {
+        <ion-col size="6" class="button-container">
+          <ion-card class="grid-button" [routerLink]="['/tickets', edificio.id]">
+            <ion-card-content>
+              <ion-label class="button-text">{{ edificio.nombre | uppercase }}</ion-label>
+              <ion-img src="RowanIcon/Edificio.png" alt="Icono Edificio"></ion-img>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      }
+      <ion-col size="6" class="button-container">
+        <ion-card class="grid-button" [routerLink]="['/perfil']">
+          <ion-card-content>
+            <ion-label class="button-text">INFO</ion-label>
+            <ion-img src="RowanIcon/Info.png" alt="Información Icono"></ion-img>            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="footer-logo">
+    <ion-img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks"></ion-img>
+  </div>
+</ion-content>
+
+<style>
+  /* === ESTILOS NUEVOS PARA NOTIFICACIONES === */
+  .notification-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100; /* Asegura que esté por encima de todo */
+  }
+
+  .notif-btn {
+    --color: #e70043; /* Color rojo Rowan */
+    position: relative;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+
+  .floating-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    font-size: 0.7em;
+    padding: 3px 6px;
+  }
+
+  /* Estilos dentro del Popover */
+  .popover-header {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    color: #333;
+  }
+
+  .empty-state {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+  }
+
+  /* === TUS ESTILOS EXISTENTES (Sin cambios) === */
+  .menu-page {
+    --background: #ffffff; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    /* Importante para el posicionamiento absoluto */
+    position: relative; 
+  }
+
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .top-logo-container ion-img {
+    width: 60px;
+    height: auto;
+  }
+  
+  .header-title {
+    font-size: 2em;
+    color: #e70043;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .buttons-grid {
+    padding: 0 10px;
+  }
+  
+  .grid-button {
+    --background: linear-gradient(135deg, #f8f8f8, #e0e0e0); 
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    height: 100%;
+  }
+
+  .grid-button:hover {
+    transform: translateY(-3px);
+  }
+
+  .grid-button ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+  }
+
+  .grid-button ion-img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  .button-text {
+    font-weight: 600;
+    color: #e70043;
+    font-size: 1.1em;
+  }
+  
+  .footer-logo {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex; 
+    justify-content: center; 
+    width: 100%;
+  }
+  
+  .footer-logo ion-img {
+    width: 200px;
+    height: auto;
+  }
+</style>

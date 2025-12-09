@@ -1,0 +1,493 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" class="back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="header-title">{{ edificioNombre() | uppercase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding tickets-page">
+  <div class="search-filter-container">
+    <ion-searchbar 
+      class="ticket-searchbar" 
+      placeholder="Buscar por ID"
+      [debounce]="300"
+      (ionInput)="onSearchChange($event)">
+    </ion-searchbar>
+    
+    <div class="filter-sort-group">
+      <ion-select 
+        placeholder="Sistema" 
+        class="system-select"
+        [(ngModel)]="selectedSystem"
+        (ionChange)="onSystemChange($event)">
+        <ion-select-option value="todos">Todos los Sistemas</ion-select-option>
+        @for (sistema of tiposDeSistema(); track sistema.id) {
+          <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+        }
+      </ion-select>
+    </div>
+  </div>
+
+  <div class="tickets-list">
+    @for (ticket of tickets(); track ticket.id) {
+      <ion-card class="ticket-card">
+        <ion-card-content class="ticket-card-content">
+          <div class="ticket-header">
+            <div class="id-group">
+              <p class="ticket-description-title">ID:</p>
+              <p class="ticket-description">{{ ticket.id }}</p>
+            </div>
+            <div class="date-group">
+              <p class="ticket-description-title">Fecha:</p>
+              <p class="ticket-description">{{ ticket.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+            </div>
+          </div>
+          <div class="ticket-info">
+            <p class="ticket-description-title">Sistema:</p>
+            <p class="ticket-description">{{ ticket.tipoSistema.nombre }}</p>
+            <p class="ticket-description-title">Descripción:</p>
+            <p class="ticket-description">{{ ticket.descripcion }}</p>
+            <p class="ticket-description-title">Asignado a:<br></p>
+            <p class="ticket-description">{{ ticket.usuarioAsignado?.nombre || 'No Asignado' }}</p>
+          </div>
+          <div class="ticket-actions">
+            <span class="status-badge" 
+                  [ngClass]="{'pending-status': ticket.status === 'pendiente', 'review-status': ticket.status === 'revision', 'attended-status': ticket.status === 'finalizado'}">
+              {{ ticket.status }}
+            </span>
+            <div class="icon-group">
+              <ion-button class="action-button" (click)="handleEvidence(ticket)">
+                <ion-img src="RowanIcon/camara.png" alt="Cámara"></ion-img>
+              </ion-button>
+              @if (userRole() === 'Coordinador' || userRole() === 'Administración') {
+                <ion-button class="action-button" (click)="handlePdf(ticket)">
+                  <ion-img src="RowanIcon/PDF2.png" alt="PDF"></ion-img>
+                </ion-button>
+              }
+              
+              @if (userRole() === 'Administración' || userRole() === 'Coordinador') {
+                <ion-button class="action-button" (click)="openEditModal(ticket)">
+                  <ion-img src="RowanIcon/Editar.png" alt="Editar"></ion-img>
+                </ion-button>
+              }
+              
+              @if (userRole() === 'Administración') {
+                <ion-button class="action-button" (click)="confirmDelete(ticket.id)">
+                  <ion-img src="RowanIcon/Eliminar.png" alt="Eliminar"></ion-img>
+                </ion-button>
+              }
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
+  </div>
+  @if (userRole() === 'Administración') {  
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button class="add-ticket-button" (click)="openAddTicketModal()">
+        <ion-img src="RowanIcon/Agregar.png"></ion-img>
+      </ion-fab-button>
+    </ion-fab>
+  }
+  <input 
+    type="file" 
+    accept="application/pdf" 
+    style="display: none;" 
+    #pdfInput
+    (change)="onPdfSelected($event)"
+  >
+</ion-content>
+
+<div class="modal-overlay" [class.show]="isAddTicketModalOpen()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>AGREGAR TICKET</h2>
+      <ion-icon name="close-circle-outline" class="close-icon" (click)="closeAddTicketModal()"></ion-icon>
+    </div>
+    <div class="modal-body">
+      <p><strong>Fecha:</strong> {{ newTicketDate | date:'dd/MM/yyyy' }}</p>
+      <ion-select aria-label="Tipo de Sistema" [(ngModel)]="newTicket.tipoSistemaId" interface="popover" placeholder="Selecciona un sistema">
+        @for (sistema of tiposDeSistema(); track sistema.id) {
+          <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+        }
+      </ion-select>
+      <ion-textarea
+        label="Descripción:"
+        labelPlacement="floating"
+        placeholder="Introduce la descripción del problema"
+        rows="6"
+        maxlength="500"
+        [(ngModel)]="newTicket.descripcion"
+        autoGrow="true"
+      ></ion-textarea>
+    </div>
+    <div class="modal-footer">
+      <ion-button expand="block" (click)="saveNewTicket()">GUARDAR</ion-button>
+    </div>
+  </div>
+</div>
+
+@if (editingTicket()) {
+  <div class="modal-overlay show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>EDITAR TICKET #{{ editingTicket()?.id }}</h2>
+        <ion-icon name="close-circle-outline" class="close-icon" (click)="closeEditModal()"></ion-icon>
+      </div>
+      <div class="modal-body">
+        <p><strong>Fecha:</strong> {{ editingTicket()?.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+        
+        <ion-select aria-label="Tipo de Sistema" [(ngModel)]="editingTicket().tipo_sistema_id" interface="popover" placeholder="Selecciona un sistema">
+          @for (sistema of tiposDeSistema(); track sistema.id) {
+            <ion-select-option [value]="sistema.id">{{ sistema.nombre }}</ion-select-option>
+          }
+        </ion-select>
+        
+        @if (userRole() === 'Coordinador') {
+        <ion-select aria-label="Asignar a" [(ngModel)]="editingTicket().asignado_id" interface="popover" placeholder="Asignar a un técnico">
+          <ion-select-option [value]="null">Sin Asignar</ion-select-option>
+          @for (tecnico of tecnicos(); track tecnico.id) {
+            <ion-select-option [value]="tecnico.id">{{ tecnico.nombre }} {{ tecnico.apellidos }}</ion-select-option>
+          }
+        </ion-select>
+
+        <ion-select aria-label="Estatus" [(ngModel)]="editingTicket().status" interface="popover" placeholder="Estatus del Ticket" style="margin-top: 15px;">
+            <ion-select-option value="pendiente">pendiente</ion-select-option>
+            <ion-select-option value="revision">revision</ion-select-option>
+            <ion-select-option value="finalizado">finalizado</ion-select-option>
+        </ion-select>
+        }
+        
+        <ion-textarea
+          label="Descripción:"
+          labelPlacement="floating"
+          placeholder="Introduce la descripción del problema"
+          rows="6"
+          maxlength="500"
+          [(ngModel)]="editingTicket().descripcion"
+          autoGrow="true"
+        ></ion-textarea>
+      </div>
+      <div class="modal-footer">
+        <ion-button expand="block" (click)="saveTicketChanges()">GUARDAR CAMBIOS</ion-button>
+      </div>
+    </div>
+  </div>
+}
+@if (viewingImage()) {
+  <div class="modal-overlay show" (click)="closeImageViewer()">
+    <div class="image-modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>EVIDENCIA</h2>
+        <ion-icon name="close-circle-outline" class="close-icon" (click)="closeImageViewer()"></ion-icon>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <img [src]="viewingImage()" style="max-width: 100%; max-height: 60vh; border-radius: 10px;" />
+      </div>
+    </div>
+  </div>
+}
+
+
+<style>
+  /* === Estilos generales === */
+
+  .tickets-page {
+    --background: #f4f4f4; /* Fondo gris claro */
+  }
+
+  .header-toolbar {
+    --background: #e70043;
+    color: white;
+  }
+
+  .header-title {
+    color: white;
+    text-align: center;
+  }
+
+  .back-button {
+    --color: white;
+  }
+
+  /* Contenedor principal para centrar el contenido */
+  .ion-padding {
+    max-width: 440px; /* Ancho del iPhone 16 Pro Max */
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* === Search & Filter === */
+  .search-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .ticket-searchbar {
+    --background: #ffffff;
+    --border-radius: 20px;
+    --placeholder-color: #999;
+    --color: #333;
+    height: 40px;
+    flex: 1;
+  }
+  
+  .filter-sort-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .system-select {
+    --placeholder-color: #333;
+    --background: #ffffff00;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding-left: 10px;
+    max-width: 150px;
+  }
+  
+  .filter-button {
+    --background: #e70043;
+    --border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+  }
+  
+  .filter-button ion-icon {
+    font-size: 1.2em;
+    color: #ffffff;
+  }
+
+  /* === Cards de Tickets === */
+  .tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ticket-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+  }
+
+  .ticket-card-content {
+    padding: 15px;
+  }
+  
+  .ticket-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .ticket-id, .ticket-date {
+    font-weight: bold;
+    color: #e70043;
+    font-size: 0.9em;
+  }
+  
+  .ticket-info {
+    margin-bottom: 10px;
+  }
+
+  .ticket-system {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e70043;
+    margin: 0;
+  }
+  
+  .ticket-description-title {
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+    margin-bottom: 2px;
+  }
+
+  .ticket-description, .ticket-assigned {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+  }
+
+  /* === Acciones de la tarjeta === */
+  .ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+    text-transform: none;
+    height: 30px;
+    line-height: 20px;
+  }
+
+  .pending-status {
+    background-color: #e70043; /* Color rojo para "Pendiente" */
+  }
+
+  .review-status {
+    background-color: #ffa500; /* Color naranja para "Revisión" */
+  }
+  
+  .attended-status {
+    background-color: #6fbb3d; /* Color verde para "Atendido" */
+  }
+
+  .icon-group {
+    display: flex;
+    gap: 5px;
+  }
+
+  .icon-group ion-img {
+    width: 30px;
+    height: 30px;
+  }
+  .action-button {
+    --background: transparent; /* Fondo transparente para que el botón no tenga color */
+    --box-shadow: none;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    height: 30px;
+    width: 30px;
+  }
+
+  .action-button ion-img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* === Botón FAB para agregar === */
+  .add-ticket-button {
+    --background: #6fbb3d44;
+    --border-radius: 50%;
+    width: 56px;
+    height: 56px;
+  }
+  
+  /* Media query para iPhone 16 Pro Max para centrar el contenido */
+  @media only screen and (min-width: 440px) {
+    .tickets-page {
+      max-width: 440px;
+      margin: 0 auto;
+    }
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.show .modal-content {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+
+  .close-icon {
+    font-size: 2em;
+    color: #999;
+    cursor: pointer;
+  }
+
+  .close-icon:hover {
+    color: #666;
+  }
+
+  .modal-body p {
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .modal-body ion-select {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .modal-body ion-textarea {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .modal-footer {
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .modal-footer ion-button {
+    --background: #3880ff; /* Color primario de Ionic */
+    --color: white;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  .image-modal-content {
+  background-color: white;
+  padding: 15px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  }
+</style>

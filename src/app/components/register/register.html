@@ -1,0 +1,175 @@
+<ion-content class="ion-padding register-page">
+  <div class="main-container">
+    <div class="top-logo-container">
+      <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Esférico Rowan"></ion-img>
+    </div>
+
+    <div class="form-card-container">
+      <ion-card class="form-card">
+        <ion-card-content>
+          <form (ngSubmit)="register()">
+            <ion-list lines="none">
+              <ion-item class="input-field">
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input type="text" name="name" [(ngModel)]="userData.nombre" required></ion-input>
+              </ion-item>
+              
+              <ion-item class="input-field">
+                <ion-label position="stacked">Apellidos</ion-label>
+                <ion-input type="text" name="apellidos" [(ngModel)]="userData.apellidos" required></ion-input>
+              </ion-item>
+
+              <ion-item class="input-field">
+              <ion-label position="stacked">Teléfono (Opcional)</ion-label>
+              <ion-input type="tel" name="telefono" [(ngModel)]="userData.telefono"></ion-input>
+              </ion-item>
+
+              <ion-item class="input-field">
+                <ion-label position="stacked">E-mail</ion-label>
+                <ion-input type="email" name="email" [(ngModel)]="userData.correo" required></ion-input>
+              </ion-item>
+
+              <ion-item class="input-field">
+                <ion-label position="stacked">Contraseña</ion-label>
+                <ion-input type="password" name="password" [(ngModel)]="userData.contrasena" required></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <ion-button expand="block" class="ion-margin-top register-button" type="submit">
+              Registrarse
+            </ion-button>
+
+            <p class="login-link ion-text-center">
+              <span>¿Ya tienes cuenta? </span>
+              <a [routerLink]="['/login']">Inicia Sesión</a>
+            </p>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="bottom-logo-container">
+      <ion-img src="RowanIcon/LogoRWN.png" alt="Logo Rowan Networks"></ion-img>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+  .register-page {
+    --background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Modificado de flex-start a center */
+    min-height: 100vh;
+    padding-top: 0; /* Eliminado el padding superior ya que no es necesario */
+  }
+
+  .main-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .top-logo-container {
+    position: absolute;
+    top: -50px;
+    z-index: 10;
+  }
+
+  .top-logo-container ion-img {
+    width: 100px;
+    height: auto;
+    margin-top: 30px;
+  }
+
+  .form-card-container {
+    width: 100%;
+    border: 3px solid #e70043;
+    border-radius: 30px;
+    padding: 60px 20px 20px 20px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-top: 30px;
+  }
+
+  .form-card {
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .input-field {
+    margin-bottom: 20px;
+    --background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    --padding-start: 10px;
+  }
+  
+  .input-field ion-label {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .terms-group {
+    --background: transparent;
+    --inner-padding-end: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+  .terms-group ion-label {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #333;
+}
+.terms-group ion-label a {
+    color: #007bff;
+    text-decoration: underline;
+}
+  
+  .register-button {
+    --background: #e70043;
+    --border-radius: 20px;
+    height: 45px;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  
+  .login-link {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #333;
+  }
+  
+  .login-link a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .bottom-logo-container {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .bottom-logo-container ion-img {
+    width: 200px;
+    height: auto;
+  }
+
+  /* Media query para iPhone 16 Pro Max */
+  @media only screen and (min-width: 440px) {
+    .main-container {
+      max-width: 420px;
+    }
+  }
+</style>

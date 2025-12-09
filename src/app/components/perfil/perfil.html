@@ -1,0 +1,223 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" class="back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="header-title">PERFIL</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="true" class="ion-padding profile-page">
+  
+  <div class="main-wrapper">
+    
+    <div class="card-container">
+      <div class="profile-logo-container">
+        <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo de perfil"></ion-img>
+      </div>
+      <ion-card class="profile-card">
+        <ion-card-content class="profile-info-content">
+          <ion-item lines="none" class="profile-item">
+            <ion-label>
+              <h2 class="profile-label-title">Nombre:</h2>
+              <p class="profile-label-value">{{ profile.name }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none" class="profile-item">
+            <ion-label>
+              <h2 class="profile-label-title">Rol:</h2>
+              <p class="profile-label-value">{{ profile.rol || 'No asignado' }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none" class="profile-item">
+            <ion-label>
+              <h2 class="profile-label-title">E-mail:</h2>
+              <p class="profile-label-value">{{ profile.correo }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-button expand="block" class="logout-button" (click)="logout()">Cerrar Sesión</ion-button>
+    </div>
+    
+    <ion-card class="force-white-card ion-margin-top">
+      <ion-card-header>
+        <ion-card-title class="dark-text">Configuración de Seguridad (2FA)</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        
+        <div *ngIf="!is2FAEnabled">
+          <p class="dark-text">La Autenticación de Dos Factores (TOTP) no está habilitada.</p>
+          <ion-button expand="block" color="secondary" class="ion-margin-top" (click)="start2FASetup()">
+            Activar 2FA
+          </ion-button>
+        </div>
+
+        <div *ngIf="is2FAEnabled && !showQRSetup">
+          <p class="dark-text">La Autenticación de Dos Factores (TOTP) está <strong>HABILITADA</strong>.</p>
+          <ion-button expand="block" color="danger" class="ion-margin-top" (click)="disable2FA()">
+            Deshabilitar 2FA
+          </ion-button>
+        </div>
+
+        <div *ngIf="showQRSetup">
+          <hr style="background: #ccc; height: 1px; border: 0;">
+          <h3 class="dark-text">Paso 1: Escanea el código</h3>
+          <p class="dark-text">Escanea la siguiente imagen con tu aplicación de autenticación.</p>
+          
+          <div style="text-align: center; margin: 15px 0;">
+            <img [src]="qrCodeDataURL" alt="Código QR para 2FA" *ngIf="qrCodeDataURL" style="width: 200px; height: 200px;">
+          </div>
+
+          <ion-item class="input-field-custom">
+            <ion-label position="stacked" class="dark-text">Clave Secreta</ion-label>
+            <ion-input type="text" [value]="secretKey" readonly></ion-input>
+          </ion-item>
+
+          <h3 class="dark-text">Paso 2: Verifica el código</h3>
+          <ion-item class="input-field-custom">
+            <ion-label position="stacked" class="dark-text">Código de 6 dígitos</ion-label>
+            <ion-input type="tel" maxlength="6" [(ngModel)]="verificationCode" placeholder="Ej: 123456"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" color="primary" class="ion-margin-top" [disabled]="verificationCode.length !== 6" (click)="activate2FA()">
+            Confirmar 2FA
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
+    <div class="scroll-spacer"></div>
+
+  </div>
+</ion-content>
+
+<style>
+  /* === ESTILOS CSS ACTUALIZADOS === */
+  
+  .profile-page {
+    --background: #fff;
+  }
+
+  .main-wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: block; 
+    margin-top: 30px;
+  }
+
+  /* Espacio vacío al final para que el scroll baje más de la cuenta */
+  .scroll-spacer {
+    width: 100%;
+    height: 350px; /* Aumentado a 350px para asegurar visualización */
+    display: block;
+    background: transparent;
+  }
+
+  /* === FUERZA BRUTA PARA EL MODO OSCURO === */
+  /* Esto sobreescribe el tema oscuro de Android */
+  .force-white-card {
+    --background: #ffffff !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    --color: #000000 !important;
+    color: #000000 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    width: 100%;
+  }
+  
+  /* Asegura que el texto dentro de la tarjeta sea negro */
+  .dark-text {
+    color: #000000 !important;
+    --color: #000000 !important;
+  }
+  
+  /* Estilos para los textos dentro de ion-card-content si no usan la clase dark-text */
+  ion-card-content p, ion-card-content h3 {
+     color: #000000 !important;
+  }
+
+  /* Inputs personalizados para resaltar en fondo blanco */
+  .input-field-custom {
+    --background: #f4f4f4 !important;
+    background: #f4f4f4 !important;
+    --color: #000000 !important;
+    color: #000000 !important;
+    --border-radius: 8px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+  }
+
+  .input-field-custom ion-input {
+    --color: #000 !important;
+    --placeholder-color: #666 !important;
+  }
+  
+  .input-field-custom ion-label {
+    color: #000 !important;
+  }
+
+  /* --- Estilos Generales --- */
+  ion-toolbar {
+    --background: #e70043;
+    color: white;
+  }
+  .back-button { --color: white; }
+  .header-title { color: white; text-align: center; }
+
+  .card-container {
+    position: relative;
+    width: 100%;
+    border: 3px solid #e70043;
+    border-radius: 30px;
+    padding: 60px 20px 20px 20px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-logo-container {
+    position: absolute;
+    top: -50px;
+    z-index: 10;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 3px solid #e70043;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-logo-container ion-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-card {
+    background: transparent !important;
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+    --background: transparent;
+  }
+
+  .profile-label-title { font-weight: bold; color: #333; margin-bottom: 2px; }
+  .profile-label-value { color: #555; }
+  
+  .logout-button {
+    --background: #e70043;
+    height: 45px;
+    font-weight: 600;
+    margin-top: 20px;
+    width: 100%;
+    --border-radius: 20px;
+  }
+
+</style>

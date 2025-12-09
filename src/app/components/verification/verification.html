@@ -1,0 +1,39 @@
+<ion-content class="ion-padding verification-page">
+  <div class="main-container">
+    <div class="top-logo-container">
+      <ion-img src="RowanIcon/LogoFit.jpeg" alt="Logo Rowan"></ion-img>
+    </div>
+
+    <div class="form-card-container">
+      <h2>Verificación de Seguridad</h2>
+      <p class="ion-padding-bottom">
+        Hemos enviado un código de 6 dígitos a tu correo electrónico.
+      </p>
+
+      <ion-list lines="none">
+        <ion-item class="input-field">
+          <ion-label position="stacked">Código de verificación</ion-label>
+          <ion-input 
+            type="text" 
+            placeholder="Ej. 123456" 
+            [(ngModel)]="twoFactorCode" 
+            maxlength="6"
+            class="ion-text-center letter-spacing-input">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" class="login-button" (click)="verifyCode()">
+        VERIFICAR CÓDIGO
+      </ion-button>
+      
+      <ion-button expand="block" fill="clear" color="medium" (click)="cancel()">
+        Volver al inicio
+      </ion-button>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <ion-img src="RowanIcon/LogoRWN.png" style="width: 200px; margin: 0 auto;"></ion-img>
+    </div>
+  </div>
+</ion-content>
