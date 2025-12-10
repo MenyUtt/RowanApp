@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   // IMPORTANTE: Si vas a probar en el celular, pon aquí tu IP de red local (ej: 192.168.1.50)
   // Si dejas localhost, la app en el celular intentará conectarse a sí misma y fallará.
-  apiUrl: 'http://192.168.1.78:3000',
+  apiUrl: 'https://api.victorobproyecto.site',
   firebase: {
     apiKey: "AIzaSyDtkhCtMuXNAYlY_Sr39PouNRV9Qo-vIVU",
     authDomain: "rowanapp-7f560.firebaseapp.com",
