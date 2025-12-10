@@ -29,12 +29,13 @@ export class Login {
   };
 
   captchaToken: string = '';
-  siteKey: string = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+  siteKey: string = '6LfFZCUsAAAAAPmgQ3N94AaQURo1amC-5g0lgZ-3';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   resolved(captchaResponse: string | null) {
     this.captchaToken = captchaResponse || '';
+    console.log('Captcha resuelto:', this.captchaToken);
   }
 
   login() {

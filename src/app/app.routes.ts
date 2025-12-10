@@ -11,6 +11,11 @@ import { publicGuard } from './guards/public.guard';
 
 export const routes: Routes = [
   // Rutas PÚBLICAS (Solo accesibles si NO estás logueado)
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
   { 
     path: 'login', 
     component: Login, 
