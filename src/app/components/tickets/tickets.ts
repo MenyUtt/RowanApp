@@ -67,7 +67,7 @@ export class Tickets implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userJson = localStorage.getItem('currentUser');
+    const userJson = sessionStorage.getItem('currentUser');
     if (userJson) {
       const userData = JSON.parse(userJson);
       this.userRole.set(userData.rol);

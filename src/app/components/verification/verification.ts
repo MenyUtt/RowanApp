@@ -95,9 +95,9 @@ export class Verification implements OnInit {
       // Corregido: usar authService y twoFactorCode en lugar de auth y code
       const res: any = await this.authService.verify2fa(this.userId, this.twoFactorCode).toPromise();
 
-      localStorage.setItem('access_token', res.access_token);
-      localStorage.setItem('currentUser', JSON.stringify(res.usuario));
-      this.router.navigate(['/menu']);
+      sessionStorage.setItem('access_token', res.access_token);
+      sessionStorage.setItem('currentUser', JSON.stringify(res.usuario));
+      this.router.navigate(['/menu'], { replaceUrl: true });
       
     } catch (err) {
       this.presentToast('Código incorrecto o expirado.', 'danger');

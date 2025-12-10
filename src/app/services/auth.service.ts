@@ -1,21 +1,46 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
-// CORRECCIÓN 1: Se eliminó el ";" al final de esta línea
 @Injectable({
   providedIn: 'root'
 }) 
 export class AuthService {
-  // CORRECCIÓN 2: Se cambió 'apiBaseUrl' por 'apiUrl' para coincidir con environment.ts
   private apiUrl = environment.apiUrl; 
+  private router = inject(Router);
 
   constructor(private http: HttpClient) { }
 
-  // Función de utilidad para obtener las opciones de cabecera con el token JWT
+  // === GESTIÓN DE SESIÓN (sessionStorage) ===
+
+  // Guardar sesión (Usar sessionStorage para que expire al cerrar)
+  saveSession(token: string, user: any) {
+    sessionStorage.setItem('access_token', token);
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  // Obtener usuario actual
+  getUser() {
+    const userJson = sessionStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
+  }
+
+  // Verificar si está logueado
+  isAuthenticated(): boolean {
+    return !!sessionStorage.getItem('access_token');
+  }
+
+  // Cerrar sesión y borrar todo
+  logout() {
+    sessionStorage.clear();
+    // replaceUrl: true evita que puedan volver atrás
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
+
   private getAuthOptions() {
-    const token = localStorage.getItem('access_token'); 
+    const token = sessionStorage.getItem('access_token'); 
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -24,24 +49,21 @@ export class AuthService {
     };
   }
   
-  // 1. Llama a POST /auth/login-verify-2fa (Verificación Login Paso 2)
+  // === TUS MÉTODOS HTTP EXISTENTES ===
   verify2fa(userId: number, code: string): Observable<any> {
     const body = { userId, code };
     return this.http.post(`${this.apiUrl}/auth/login-verify-2fa`, body);
   }
 
-  // 2. Llama a GET /auth/2fa/setup (Solicita Secreto y QR)
   setup2FA(): Observable<any> {
     return this.http.get(`${this.apiUrl}/auth/2fa/setup`, this.getAuthOptions());
   }
 
-  // 3. Llama a POST /auth/2fa/activate (Activa permanentemente 2FA)
   activate2FA(secret: string, token: string): Observable<any> {
     const body = { secret, token };
     return this.http.post(`${this.apiUrl}/auth/2fa/activate`, body, this.getAuthOptions());
   }
 
-  // 4. Llama a POST /auth/2fa/disable (Deshabilita 2FA)
   disable2FA(): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/2fa/disable`, {}, this.getAuthOptions());
   }

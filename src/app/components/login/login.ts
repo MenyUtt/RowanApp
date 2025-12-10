@@ -52,13 +52,11 @@ export class Login {
       next: (response: any) => {
         if (response.require2fa) {
           console.log('Credenciales correctas. Redirigiendo a verificación.');
-          // === CAMBIO CLAVE: Navegar a la nueva vista pasando el ID ===
-          this.router.navigate(['/verification', response.userId]);
+          this.router.navigate(['/verification', response.userId], { replaceUrl: true });
         } else {
-            // Caso raro si quitaras 2FA, pero lo dejamos por si acaso
-            localStorage.setItem('currentUser', JSON.stringify(response.usuario));
-            localStorage.setItem('access_token', response.access_token);
-            this.router.navigate(['/menu']);
+            sessionStorage.setItem('currentUser', JSON.stringify(response.usuario));
+            sessionStorage.setItem('access_token', response.access_token)
+            this.router.navigate(['/menu'], { replaceUrl: true });
         }
       },
       error: (error) => {

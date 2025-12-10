@@ -63,7 +63,7 @@ export class Perfil implements OnInit {
   private loadingCtrl = inject(LoadingController);
 
   ngOnInit() {
-    const userJson = localStorage.getItem('currentUser');
+    const userJson = sessionStorage.getItem('currentUser');
     if (userJson) {
       const userData = JSON.parse(userJson);
       this.profile = {
@@ -77,9 +77,7 @@ export class Perfil implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('access_token');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   async start2FASetup() {
@@ -150,11 +148,11 @@ export class Perfil implements OnInit {
     await toast.present();
   }
   private updateLocalStorage(isEnabled: boolean) {
-    const userJson = localStorage.getItem('currentUser');
+    const userJson = sessionStorage.getItem('currentUser');
     if (userJson) {
       const userData = JSON.parse(userJson);
       userData.esDosFactoresHabilitado = isEnabled; 
-      localStorage.setItem('currentUser', JSON.stringify(userData));
+      sessionStorage.setItem('currentUser', JSON.stringify(userData));
     }
   }
 }

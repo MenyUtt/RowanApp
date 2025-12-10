@@ -74,7 +74,7 @@ export class FcmService {
   }
 
   private saveTokenToBackend(token: string) {
-    const userJson = localStorage.getItem('currentUser');
+    const userJson = sessionStorage.getItem('currentUser');
     if (userJson) {
       const user = JSON.parse(userJson);
       // Usamos el endpoint que creamos anteriormente
